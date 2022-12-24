@@ -1,0 +1,10 @@
+filepath: 'marker/images/cave2.jpeg'
+
+size:
+  length: 2
+  width: 1
+
+position:
+  x: 10
+  y: 10
+  z: 2
