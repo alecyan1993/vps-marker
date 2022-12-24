@@ -1,4 +1,5 @@
-filepath: 'marker/images/cave2.jpeg'
+file_path: 'marker/images/cave2.jpeg'
+feature_path: 'marker/features/cave2.npy'
 
 size:
   length: 2
@@ -8,3 +9,7 @@ position:
   x: 10
   y: 10
   z: 2
+
+visualize: True
+
+save: True
