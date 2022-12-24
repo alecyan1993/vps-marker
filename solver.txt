@@ -2,9 +2,15 @@
 How to solve the marker based localization problem?
 ----
 
-- Marker or marker image with enough feature points (this case a "cave" image)
--
+* Preprocess
+- Marker or marker image candidate with enough feature points (this case a "cave" image)
+- SuperPoint to extract and store the features for the marker candidate
+- Based on marker physical location config, calculate 3d position of marker candidate's feature points
 
-
-
+* Runtime
+- Image transform for input image (resize, tensor...)
+- SuperPoint to extract features for input images
+- SuperGlue to match features between query image and marker candidates, generate 2d-3d pairs for input image
+- PnP solver to calculate T_world_camera for the query image
+- Coordinate transform for T_physical_ar
 
