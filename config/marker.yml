@@ -5,11 +5,16 @@ size:
   length: 2
   width: 1
 
+# NOTE: origin point of the marker is on the up-left corner
 position:
   x: 10
   y: 10
   z: 2
 
-visualize: True
+rotation:
+  x: -90
+  y: 0
+  z: 0
 
+visualize: True
 save: True
