@@ -1,0 +1,10 @@
+
+How to solve the marker based localization problem?
+----
+
+- Marker or marker image with enough feature points (this case a "cave" image)
+-
+
+
+
+
