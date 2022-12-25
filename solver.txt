@@ -3,9 +3,9 @@ How to solve the marker based localization problem?
 ----
 
 * Preprocess
-- Marker or marker image candidate with enough feature points (this case a "cave" image)
-- SuperPoint to extract and store the features for the marker candidate
-- Based on marker physical location config, calculate 3d position of marker candidate's feature points
+- [Done] Marker or marker image candidate with enough feature points (this case a "cave" image)
+- [Done] SuperPoint to extract and store the features for the marker candidate
+- [Done] Based on marker physical location config, calculate 3d position of marker candidate's feature points
 
 * Runtime
 - Image transform for input image (resize, tensor...)
