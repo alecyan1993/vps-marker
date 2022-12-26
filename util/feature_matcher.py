@@ -87,6 +87,32 @@ class FeatureMatcher:
         points_3d = np.array(points_3d, dtype=np.double)
         return points_pixel, points_3d
 
+    @staticmethod
+    def visualize_superglue(sg_res, query_img, marker_img, match_threshold=0.3):
+        h = max(query_img.shape[0], marker_img.shape[0])
+        canvas = np.ones((h, query_img.shape[1] + marker_img.shape[1], 3)) * 255
+        canvas[0:marker_img.shape[0], 0:marker_img.shape[1]] = marker_img
+        canvas[0:query_img.shape[0], marker_img.shape[1]:] = query_img
+        canvas = canvas.astype(np.uint8)
+
+        kpts0 = sg_res['keypoints0'].squeeze().cpu().detach().numpy()
+        kpts1 = sg_res['keypoints1'].squeeze().cpu().detach().numpy()
+        matches0 = sg_res['matches0'].squeeze().cpu().detach().numpy()
+        matches1 = sg_res['matches1'].squeeze().cpu().detach().numpy()
+        matching_scores0 = sg_res['matching_scores0'].squeeze().cpu().detach().numpy()
+        pointsid1 = matches0[matching_scores0 > match_threshold]
+        kpts0_filter = [kpts0[matches1[i]] for i in pointsid1]
+        kpts1_filter = [kpts1[i] for i in pointsid1]
+
+        for i in range(len(kpts0_filter)):
+            kpt0 = kpts0_filter[i]
+            kpt1 = kpts1_filter[i]
+            cv2.circle(canvas, kpt1.astype(int), 6, (0, 0, 255), -1)
+            cv2.circle(canvas, (int(kpt0[0] + marker_img.shape[1]), int(kpt0[1])), 6, (0, 0, 255), -1)
+            cv2.line(canvas, kpt1.astype(int), (int(kpt0[0] + marker_img.shape[1]), int(kpt0[1])), (0, 0, 255), 1)
+        cv2.imshow('canvas', canvas)
+        cv2.waitKey(0)
+
 
 
 

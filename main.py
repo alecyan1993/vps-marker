@@ -35,6 +35,8 @@ def visualize_superglue(sg_res, query_img, marker_img, match_threshold=0.3):
         cv2.circle(canvas, kpt1.astype(int), 6, (0, 0, 255), -1)
         cv2.circle(canvas, (int(kpt0[0] + marker_img.shape[1]), int(kpt0[1])), 6, (0, 0, 255), -1)
         cv2.line(canvas, kpt1.astype(int), (int(kpt0[0] + marker_img.shape[1]), int(kpt0[1])), (0, 0, 255), 1)
+    cv2.putText(img=canvas, text=f'Number of Matched Feature Points: {len(kpts0_filter)}', org=(100, 100),
+                fontFace=cv2.FONT_HERSHEY_TRIPLEX, fontScale=1.5, color=(0, 255, 0), thickness=2)
     cv2.imshow('canvas', canvas)
     cv2.waitKey(0)
 
@@ -58,5 +60,7 @@ if __name__ == '__main__':
 
     match = feature_matcher.match_superglue(query_features, marker_features)
     visualize_superglue(match, img, marker, match_threshold=0.6)
+
+
 
 
