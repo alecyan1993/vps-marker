@@ -55,7 +55,9 @@ def get_pairs(sg_res, origin_features, match_threshold=0.6):
     kpts0_filter = [list(kpts0[matches1[i]].astype(int)) for i in pointsid1]
     kpts1_filter = [kpts1[i] for i in pointsid1]
     kpts1_3d_filter = [list(kpts1_3d[i]) for i in pointsid1]
-    return kpts0_filter, kpts1_filter, kpts1_3d_filter
+    return np.array(kpts0_filter).astype(np.float32), \
+           np.array(kpts1_filter).astype(np.float32), \
+           np.array(kpts1_3d_filter).astype(np.float32)
 
 
 if __name__ == '__main__':
@@ -79,11 +81,8 @@ if __name__ == '__main__':
     # visualize_superglue(match, img, marker, match_threshold=0.6)
     kp_query_pixel, kp_marker_pixel, kp_query_3d = get_pairs(match, marker_features, match_threshold=0.6)
 
-    # Pnp Solver
     pnp_solver = PnpSolver(min_points3d=50)
-    pose_guess = {'position': [10, 10, 2],
-                  'quaternion': [-0.3154602271415246, -0.40056517567031236, 0.6800333831230863, -0.5268652417556118]}
-    pnp_pose, flag = pnp_solver.solve_pnp(kp_query_pixel, kp_query_3d, query['camera_intrinsic'], pose_guess)
+    pnp_pose, flag = pnp_solver.solve_pnp(kp_query_pixel, kp_query_3d, query['camera_intrinsic'])
 
 
 
