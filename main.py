@@ -2,12 +2,12 @@ from util.model import superpoint, superglue
 from util.feature_matcher import FeatureMatcher
 from util.pnp_solver import PnpSolver
 from query import QueryImage
+from marker import from_Rt2T
 import torch
 import cv2
 import yaml
 import numpy as np
 from scipy.spatial.transform import Rotation as R
-from marker import Marker
 
 
 def get_marker(fp):
@@ -84,6 +84,7 @@ if __name__ == '__main__':
     pnp_solver = PnpSolver(min_points3d=50)
     pnp_pose, flag = pnp_solver.solve_pnp(kp_query_pixel, kp_query_3d, query['camera_intrinsic'])
 
-
+    Tcw = from_Rt2T(pnp_pose['rotation_matrix'], pnp_pose['translation'])
+    Twc = np.linalg.inv(Tcw)
 
 
