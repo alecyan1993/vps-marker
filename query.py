@@ -42,13 +42,15 @@ class QueryImage:
 
 
 if __name__ == '__main__':
+    device = 'cuda:0' if torch.cuda.is_available() else 'cpu:0'
+    sp = superpoint.SuperPoint({}).eval().to(device)
     img = cv2.imread('query/images/query_cave2.png')
     query = {'image': img,
              'translation': [0, 0, 0],
              'rotation': [0, 0, 0],
              'camera_intrinsic': np.array([[802, 0, 468.46], [0, 802, 359.71], [0, 0, 1]])}
     qi = QueryImage(query)
-    features = qi.get_feature()
+    features = qi.get_feature(sp)
     qi.visualize_features()
 
 
