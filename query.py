@@ -7,7 +7,7 @@
 - Coordinate transform for T_physical_ar
 """
 
-from util.model import superpoint
+from util.model import superpoint, superglue
 import torch
 import cv2
 import yaml
@@ -24,12 +24,11 @@ class QueryImage:
         self.trans = query['translation']
         self.rot = query['rotation']
         self.k = query['camera_intrinsic']
-        self.sp = superpoint.SuperPoint({}).eval().to(self.device)
 
-    def get_feature(self):
+    def get_feature(self, sp):
         img_tensor = torch.from_numpy(self.img / 255.0).float()[None, None].to(self.device)
-        sp_res = self.sp({'image': img_tensor})
-        sp_res['image_size'] = torch.tensor(img_tensor.shape)
+        sp_res = sp({'image': img_tensor})
+        sp_res['image_size'] = torch.tensor(self.img.shape)
         self.features = sp_res
         return sp_res
 
@@ -43,7 +42,14 @@ class QueryImage:
 
 
 if __name__ == '__main__':
-    img = cv2.imread('')
+    img = cv2.imread('query/images/query_cave2.png')
+    query = {'image': img,
+             'translation': [0, 0, 0],
+             'rotation': [0, 0, 0],
+             'camera_intrinsic': np.array([[802, 0, 468.46], [0, 802, 359.71], [0, 0, 1]])}
+    qi = QueryImage(query)
+    features = qi.get_feature()
+    qi.visualize_features()
 
 
 

@@ -13,8 +13,8 @@ Feature Matcher
 
 class FeatureMatcher:
 
-    def __init__(self, superpoint_model, superglue_model, gpu=True):
-        self.processer = 'cuda:0' if gpu else 'cpu:0'
+    def __init__(self, superpoint_model, superglue_model):
+        self.processer = 'cuda:0' if torch.cuda.is_available() else 'cpu:0'
         self.superpoint_model = superpoint_model
         self.superglue_model = superglue_model
 

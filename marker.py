@@ -34,7 +34,7 @@ class Marker:
     def get_features(self):
         marker_tensor = torch.from_numpy(self.marker / 255.0).float()[None, None].to(self.device)
         sp_res = self.sp({'image': marker_tensor})
-        sp_res['image_size'] = torch.tensor(marker_tensor.shape)
+        sp_res['image_size'] = torch.tensor(self.marker.shape)
         kp_3d = self.convert_2d_3d(sp_res)
         sp_res['keypoints_3d'] = kp_3d
         self.features = sp_res
