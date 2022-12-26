@@ -32,6 +32,7 @@ class PnpSolver:
                 )
             except:
                 print("ERROR ON SOLVING PNP!")
+                return pnp_pose, False
             else:
                 rotation_matrix = np.zeros(shape=(3, 3))
                 cv2.Rodrigues(rotation_vector, rotation_matrix)
